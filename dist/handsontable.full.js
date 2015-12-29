@@ -4756,13 +4756,13 @@ Handsontable.Core = function Core(rootElement, userSettings) {
       })(validator);
     }
     if (typeof validator == 'function') {
-      value = Handsontable.hooks.run(instance, 'beforeValidate', value, cellProperties.row, cellProperties.prop, source);
+      value = Handsontable.hooks.run(instance, 'beforeValidate', value, cellProperties.row, cellProperties.col, source);
       instance._registerTimeout(setTimeout(function() {
         validator.call(cellProperties, value, function(valid) {
-          valid = Handsontable.hooks.run(instance, 'afterValidate', valid, value, cellProperties.row, cellProperties.prop, source);
+          valid = Handsontable.hooks.run(instance, 'afterValidate', valid, value, cellProperties.row, cellProperties.col, source);
           cellProperties.valid = valid;
           done(valid);
-          Handsontable.hooks.run(instance, 'postAfterValidate', valid, value, cellProperties.row, cellProperties.prop, source);
+          Handsontable.hooks.run(instance, 'postAfterValidate', valid, value, cellProperties.row, cellProperties.col, source);
         });
       }, 0));
     } else {
@@ -6391,12 +6391,25 @@ function EditorManager(instance, priv, selection) {
         stopPropagation(event);
         break;
       case KEY_CODES.PAGE_UP:
-        selection.transformStart(-instance.countVisibleRows(), 0);
+          // TREX code was changed to support bulk selection with shift key
+          if (event.shiftKey) {
+              selection.transformEnd(-instance.countVisibleRows(), 0);
+          }
+          else{
+              selection.transformStart(-instance.countVisibleRows(), 0);
+          }
+
         event.preventDefault();
         stopPropagation(event);
         break;
       case KEY_CODES.PAGE_DOWN:
-        selection.transformStart(instance.countVisibleRows(), 0);
+          //// TREX code was changed to support bulk selection with shift key
+          if (event.shiftKey) {
+              selection.transformEnd(instance.countVisibleRows(), 0);
+          }
+          else {
+              selection.transformStart(instance.countVisibleRows(), 0);
+          }
         event.preventDefault();
         stopPropagation(event);
         break;
