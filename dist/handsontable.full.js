@@ -4756,13 +4756,13 @@ Handsontable.Core = function Core(rootElement, userSettings) {
       })(validator);
     }
     if (typeof validator == 'function') {
-      value = Handsontable.hooks.run(instance, 'beforeValidate', value, cellProperties.row, cellProperties.prop, source);
+      value = Handsontable.hooks.run(instance, 'beforeValidate', value, cellProperties.row, cellProperties.col, source);
       instance._registerTimeout(setTimeout(function() {
         validator.call(cellProperties, value, function(valid) {
-          valid = Handsontable.hooks.run(instance, 'afterValidate', valid, value, cellProperties.row, cellProperties.prop, source);
+          valid = Handsontable.hooks.run(instance, 'afterValidate', valid, value, cellProperties.row, cellProperties.col, source);
           cellProperties.valid = valid;
           done(valid);
-          Handsontable.hooks.run(instance, 'postAfterValidate', valid, value, cellProperties.row, cellProperties.prop, source);
+          Handsontable.hooks.run(instance, 'postAfterValidate', valid, value, cellProperties.row, cellProperties.col, source);
         });
       }, 0));
     } else {
@@ -23795,7 +23795,7 @@ if (typeof exports !== "undefined") {
     temp = val.match(/[^\d]+$/);
     if (temp !== null) {
       val = val.slice(0, -1);
-      if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
+      if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion && temp[0] !== _currSymbol) {
         return false;
       }
     }
