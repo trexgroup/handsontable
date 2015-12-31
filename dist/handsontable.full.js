@@ -23810,7 +23810,7 @@ if (typeof exports !== "undefined") {
     temp = val.match(/[^\d]+$/);
     if (temp !== null) {
       val = val.slice(0, -1);
-      if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
+      if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion && temp[0] !== _currSymbol) {
         return false;
       }
     }
