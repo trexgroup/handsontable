@@ -3098,7 +3098,8 @@ var WalkontableTable = function WalkontableTable(wotInstance, table) {
     var calculator = this.wot.wtViewport.columnsRenderCalculator;
     if (calculator) {
       var stretchedWidth = calculator.getStretchedColumnWidth(sourceColumn, width);
-      if (stretchedWidth) {
+        // TREX: PATCH - fix HT not to scroll when stretchedWidth is negative
+      if (stretchedWidth && stretchedWidth>0 ) {
         width = stretchedWidth;
       }
     }
